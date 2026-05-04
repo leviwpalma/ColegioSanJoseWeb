@@ -1,0 +1,107 @@
+﻿@model IEnumerable<ColegioSanJoseWeb.Models.Materium>
+
+@{
+    ViewData["Title"] = "Gestión de Materias";
+}
+
+<style>
+    /* Estilo para la tabla moderna */
+    .table-modern {
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        border: none;
+    }
+
+        .table-modern thead {
+            background-color: #007bff;
+            color: white;
+            border: none;
+        }
+
+        .table-modern th {
+            padding: 15px;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+
+        .table-modern td {
+            padding: 15px;
+            vertical-align: middle;
+        }
+
+    /* Estilo para los botones de acción */
+    .btn-action {
+        border-radius: 20px;
+        padding: 5px 15px;
+        font-size: 0.85rem;
+        transition: all 0.3s;
+        margin: 0 2px;
+    }
+
+        .btn-action:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+    /* Icono para la materia */
+    .materia-icon {
+        color: #007bff;
+        margin-right: 10px;
+        font-size: 1.2rem;
+    }
+</style>
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="text-primary fw-bold mb-0">📚 Catálogo de Materias</h2>
+            <p class="text-muted">Administración de asignaturas y docentes asignados</p>
+        </div>
+        <a asp-action="Create" class="btn btn-success rounded-pill px-4 shadow-sm">
+            + Registrar Nueva Materia
+        </a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-modern table-hover">
+            <thead>
+                <tr>
+                    <th>Asignatura</th>
+                    <th>Docente Encargado</th>
+                    <th class="text-center">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="fw-bold text-dark">
+                            <span class="materia-icon">📘</span>
+                            @Html.DisplayFor(modelItem => item.NombreMateria)
+                        </td>
+                        <td>
+                            <i class="text-muted small">Prof.</i> @Html.DisplayFor(modelItem => item.Docente)
+                        </td>
+                        <td class="text-center">
+                            <div class="btn-group">
+                                <a asp-action="Edit" asp-route-id="@item.MateriaId" class="btn btn-outline-primary btn-action">
+                                    Editar
+                                </a>
+                                <a asp-action="Details" asp-route-id="@item.MateriaId" class="btn btn-outline-secondary btn-action">
+                                    Detalles
+                                </a>
+                                <a asp-action="Delete" asp-route-id="@item.MateriaId" class="btn btn-outline-danger btn-action">
+                                    Eliminar
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

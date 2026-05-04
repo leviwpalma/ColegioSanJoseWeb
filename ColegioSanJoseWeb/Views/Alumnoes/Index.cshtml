@@ -1,0 +1,119 @@
+﻿@model IEnumerable<ColegioSanJoseWeb.Models.Alumno>
+
+@{
+    ViewData["Title"] = "Listado de Alumnos";
+}
+
+<style>
+    /* Estilo para la tabla moderna */
+    .table-modern {
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        border: none;
+    }
+
+        .table-modern thead {
+            background-color: #007bff;
+            color: white;
+            border: none;
+        }
+
+        .table-modern th {
+            padding: 15px;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+
+        .table-modern td {
+            padding: 15px;
+            vertical-align: middle;
+        }
+
+    /* Estilo para los botones de acción */
+    .btn-action {
+        border-radius: 20px;
+        padding: 5px 15px;
+        font-size: 0.85rem;
+        transition: all 0.3s;
+        margin: 0 2px;
+    }
+
+        .btn-action:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+    /* Badge para el grado */
+    .badge-grado {
+        background-color: #f8f9fa;
+        color: #495057;
+        border: 1px solid #dee2e6;
+        padding: 6px 12px;
+        border-radius: 10px;
+        font-weight: 600;
+    }
+</style>
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="text-primary fw-bold mb-0">👨‍🎓 Gestión de Alumnos</h2>
+            <p class="text-muted">Administración de la base de datos de estudiantes</p>
+        </div>
+        <a asp-action="Create" class="btn btn-success rounded-pill px-4 shadow-sm">
+            <i class="bi bi-plus-circle me-2"></i>Registrar Nuevo Alumno
+        </a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-modern table-hover">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Nombre)</th>
+                    <th>@Html.DisplayNameFor(model => model.Apellido)</th>
+                    <th>F. Nacimiento</th>
+                    <th>Grado Académico</th>
+                    <th class="text-center">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="fw-bold text-dark">
+                            @Html.DisplayFor(modelItem => item.Nombre)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Apellido)
+                        </td>
+                        <td class="text-muted">
+                            @item.FechaNacimiento.ToString("dd/MM/yyyy")
+                        </td>
+                        <td>
+                            <span class="badge-grado">
+                                @Html.DisplayFor(modelItem => item.Grado)
+                            </span>
+                        </td>
+                        <td class="text-center">
+                            <div class="btn-group">
+                                <a asp-action="Edit" asp-route-id="@item.AlumnoId" class="btn btn-outline-primary btn-action">
+                                    Editar
+                                </a>
+                                <a asp-action="Details" asp-route-id="@item.AlumnoId" class="btn btn-outline-secondary btn-action">
+                                    Detalles
+                                </a>
+                                <a asp-action="Delete" asp-route-id="@item.AlumnoId" class="btn btn-outline-danger btn-action">
+                                    Eliminar
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

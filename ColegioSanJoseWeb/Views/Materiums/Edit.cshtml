@@ -1,0 +1,121 @@
+﻿@model ColegioSanJoseWeb.Models.Materium
+
+@{
+    ViewData["Title"] = "Editar Materia";
+}
+
+<style>
+    /* Tarjeta del formulario */
+    .form-card {
+        background: white;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        border: none;
+        margin-top: 30px;
+    }
+
+    .form-header {
+        border-bottom: 2px solid #f0f0f0;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+    }
+
+    /* Inputs estilizados */
+    .form-control {
+        border-radius: 10px;
+        padding: 12px;
+        border: 1px solid #dee2e6;
+        transition: all 0.3s;
+    }
+
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 0.2rem rgba(0,123,255,0.15);
+        }
+
+    /* Botones profesionales */
+    .btn-custom {
+        border-radius: 50px;
+        padding: 12px 30px;
+        font-weight: 600;
+        transition: all 0.3s;
+    }
+
+    .btn-update {
+        background: linear-gradient(90deg, #007bff, #0056b3);
+        border: none;
+        color: white;
+    }
+
+        .btn-update:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,123,255,0.3);
+            color: white;
+        }
+
+    .btn-back {
+        color: #6c757d;
+        border: 1px solid #dee2e6;
+    }
+
+        .btn-back:hover {
+            background-color: #f8f9fa;
+        }
+</style>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="form-card">
+                <div class="form-header text-center">
+                    <h2 class="text-primary fw-bold">📝 Editar Materia</h2>
+                    <p class="text-muted">Actualice la información de la asignatura</p>
+                </div>
+
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger small"></div>
+
+                    <!-- El ID oculto es fundamental para que el servidor sepa qué registro editar -->
+                    <input type="hidden" asp-for="MateriaId" />
+
+                    <!-- Campo: Nombre de la Materia -->
+                    <div class="form-group mb-4">
+                        <label asp-for="NombreMateria" class="form-label fw-bold">Nombre de la Asignatura</label>
+                        <div class="input-group shadow-sm" style="border-radius: 10px; overflow: hidden;">
+                            <span class="input-group-text bg-light border-end-0">📘</span>
+                            <input asp-for="NombreMateria" class="form-control border-start-0" placeholder="Ej: Programación I" />
+                        </div>
+                        <span asp-validation-for="NombreMateria" class="text-danger small"></span>
+                    </div>
+
+                    <!-- Campo: Docente -->
+                    <div class="form-group mb-4">
+                        <label asp-for="Docente" class="form-label fw-bold">Docente Asignado</label>
+                        <div class="input-group shadow-sm" style="border-radius: 10px; overflow: hidden;">
+                            <span class="input-group-text bg-light border-end-0">👨‍🏫</span>
+                            <input asp-for="Docente" class="form-control border-start-0" placeholder="Nombre del profesor" />
+                        </div>
+                        <span asp-validation-for="Docente" class="text-danger small"></span>
+                    </div>
+
+                    <!-- Botones de Acción -->
+                    <div class="d-flex justify-content-between align-items-center mt-5">
+                        <a asp-action="Index" class="btn btn-back btn-custom">
+                            Cancelar
+                        </a>
+                        <button type="submit" class="btn btn-update btn-custom shadow">
+                            Actualizar Materia
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

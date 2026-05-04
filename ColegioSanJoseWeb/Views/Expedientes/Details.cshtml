@@ -1,0 +1,120 @@
+﻿@model ColegioSanJoseWeb.Models.Expediente
+
+@{
+    ViewData["Title"] = "Detalles del Expediente";
+}
+
+<style>
+    /* Tarjeta de visualización */
+    .details-card {
+        background: white;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        border: none;
+        margin-top: 30px;
+    }
+
+    .details-header {
+        border-bottom: 2px solid #f0f0f0;
+        margin-bottom: 30px;
+        padding-bottom: 15px;
+    }
+
+    /* Estilo para etiquetas y valores */
+    .label-custom {
+        color: #6c757d;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        letter-spacing: 1px;
+    }
+
+    .value-custom {
+        font-size: 1.1rem;
+        color: #343a40;
+        margin-bottom: 20px;
+    }
+
+    .nota-destacada {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: #28a745;
+    }
+
+    /* Botones */
+    .btn-custom {
+        border-radius: 50px;
+        padding: 12px 30px;
+        font-weight: 600;
+        transition: all 0.3s;
+    }
+
+    .btn-edit-details {
+        background: #007bff;
+        color: white;
+        border: none;
+    }
+
+        .btn-edit-details:hover {
+            background: #0056b3;
+            color: white;
+            transform: translateY(-2px);
+        }
+</style>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="details-card">
+                <div class="details-header text-center">
+                    <span class="display-4 mb-2 d-block">📊</span>
+                    <h2 class="text-primary fw-bold">Expediente Académico</h2>
+                    <p class="text-muted">Consulta detallada de calificaciones</p>
+                </div>
+
+                <div class="row px-4">
+                    <!-- Fila 1: Alumno y Materia -->
+                    <div class="col-md-6">
+                        <p class="label-custom mb-1">Alumno</p>
+                        <p class="value-custom fw-bold">
+                            <i class="bi bi-person-circle me-1"></i> @Html.DisplayFor(model => model.Alumno.Nombre) @Html.DisplayFor(model => model.Alumno.Apellido)
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="label-custom mb-1">Asignatura</p>
+                        <p class="value-custom">
+                            <i class="bi bi-book me-1"></i> @Html.DisplayFor(model => model.Materia.NombreMateria)
+                        </p>
+                    </div>
+
+                    <!-- Fila 2: Nota Final (Grande) -->
+                    <div class="col-md-12 text-center my-4 py-3 bg-light rounded-3">
+                        <p class="label-custom mb-0">Calificación Final</p>
+                        <div class="nota-destacada">
+                            @Html.DisplayFor(model => model.NotaFinal)
+                        </div>
+                    </div>
+
+                    <!-- Fila 3: Observaciones -->
+                    <div class="col-12">
+                        <p class="label-custom mb-1">Observaciones del Docente</p>
+                        <p class="value-custom italic text-muted">
+                            "@(string.IsNullOrEmpty(Model.Observaciones) ? "Sin observaciones registradas." : Model.Observaciones)"
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Botones de Navegación -->
+                <div class="d-flex justify-content-between align-items-center mt-5 pt-3 border-top">
+                    <a asp-action="Index" class="btn btn-outline-secondary btn-custom">
+                        Volver al Listado
+                    </a>
+                    <a asp-action="Edit" asp-route-id="@Model?.ExpedienteId" class="btn btn-edit-details btn-custom shadow">
+                        Editar Calificación
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

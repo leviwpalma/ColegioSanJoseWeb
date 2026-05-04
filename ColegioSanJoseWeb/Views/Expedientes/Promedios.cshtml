@@ -1,0 +1,169 @@
+﻿@model IEnumerable<ColegioSanJoseWeb.Models.Expediente>
+
+@{
+    ViewData["Title"] = "Reporte de Rendimiento";
+
+    // Lógica LINQ para agrupar y promediar
+    var promediosAlumnos = Model
+        .GroupBy(e => new { e.Alumno.Nombre, e.Alumno.Apellido, e.Alumno.Grado })
+        .Select(g => new
+        {
+            NombreCompleto = $"{g.Key.Nombre} {g.Key.Apellido}",
+            Grado = g.Key.Grado,
+            Promedio = g.Average(e => e.NotaFinal),
+            Materias = g.Count()
+        })
+        .OrderByDescending(p => p.Promedio);
+}
+
+<style>
+    /* Estilo de la tarjeta principal */
+    .report-card {
+        background: white;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        border: none;
+        margin-top: 30px;
+    }
+
+    .report-header {
+        border-bottom: 2px solid #f0f0f0;
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+    }
+
+    /* Tabla con estilo moderno */
+    .table-custom {
+        border-collapse: separate;
+        border-spacing: 0 8px;
+    }
+
+        .table-custom thead th {
+            border: none;
+            color: #6c757d;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        .table-custom tbody tr {
+            background-color: #f8f9fa;
+            transition: all 0.3s;
+        }
+
+            .table-custom tbody tr:hover {
+                transform: scale(1.01);
+                background-color: #ffffff;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            }
+
+        .table-custom td {
+            border: none;
+            padding: 15px;
+        }
+
+            .table-custom td:first-child {
+                border-radius: 10px 0 0 10px;
+            }
+
+            .table-custom td:last-child {
+                border-radius: 0 10px 10px 0;
+            }
+
+    /* Indicadores de nota (Pildoras) */
+    .score-badge {
+        font-weight: 800;
+        padding: 8px 16px;
+        border-radius: 50px;
+        display: inline-block;
+        min-width: 70px;
+        text-align: center;
+    }
+
+    .excelente {
+        background-color: #d4edda;
+        color: #155724;
+    }
+
+    .regular {
+        background-color: #fff3cd;
+        color: #856404;
+    }
+
+    .insuficiente {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+
+    .btn-rounded {
+        border-radius: 50px;
+        padding: 10px 25px;
+        font-weight: 600;
+    }
+</style>
+
+<div class="container mb-5">
+    <div class="report-card">
+        <div class="report-header d-flex justify-content-between align-items-center">
+            <div>
+                <h2 class="text-primary fw-bold mb-0">📈 Ranking de Promedios</h2>
+                <p class="text-muted mb-0">Rendimiento académico consolidado por estudiante</p>
+            </div>
+            <a asp-action="Index" class="btn btn-outline-secondary btn-rounded">
+                Volver a Expedientes
+            </a>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-custom align-middle">
+                <thead>
+                    <tr>
+                        <th>Estudiante</th>
+                        <th class="text-center">Grado</th>
+                        <th class="text-center">Asignaturas</th>
+                        <th class="text-end">Promedio General</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in promediosAlumnos)
+                    {
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <div class="avatar-small me-3" style="width: 35px; height: 35px; background: #e9ecef; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: bold; color: #495057;">
+                                        @item.NombreCompleto.Substring(0, 1)
+                                    </div>
+                                    <span class="fw-bold text-dark">@item.NombreCompleto</span>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <span class="text-muted">@item.Grado</span>
+                            </td>
+                            <td class="text-center">
+                                <span class="badge rounded-pill bg-white text-dark border">@item.Materias materias</span>
+                            </td>
+                            <td class="text-end">
+                                @{
+                                    string claseNota = item.Promedio >= 8 ? "excelente" :
+                                    item.Promedio >= 6 ? "regular" : "insuficiente";
+                                }
+                                <div class="score-badge @claseNota">
+                                    @(((double)item.Promedio).ToString("F2"))
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        @if (!promediosAlumnos.Any())
+        {
+            <div class="text-center py-5">
+                <span style="font-size: 3rem;">📁</span>
+                <p class="text-muted mt-2">No hay expedientes registrados para calcular promedios.</p>
+            </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,129 @@
+﻿@model ColegioSanJoseWeb.Models.Expediente
+
+@{
+    ViewData["Title"] = "Nuevo Registro";
+}
+
+<style>
+    /* Contenedor principal con efecto de elevación */
+    .form-card {
+        background: white;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        border: none;
+        margin-top: 30px;
+    }
+
+    /* Estilo para los títulos */
+    .form-header {
+        border-bottom: 2px solid #f0f0f0;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+    }
+
+    /* Mejora de los inputs y selects */
+    .form-control {
+        border-radius: 10px;
+        padding: 12px;
+        border: 1px solid #dee2e6;
+        transition: all 0.3s;
+    }
+
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 0.2rem rgba(0,123,255,0.15);
+        }
+
+    /* Botones redondeados */
+    .btn-custom {
+        border-radius: 50px;
+        padding: 12px 30px;
+        font-weight: 600;
+        transition: all 0.3s;
+    }
+
+    .btn-save {
+        background: linear-gradient(90deg, #007bff, #0056b3);
+        border: none;
+        color: white;
+    }
+
+        .btn-save:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,123,255,0.3);
+            color: white;
+        }
+
+    .btn-back {
+        color: #6c757d;
+        border: 1px solid #dee2e6;
+    }
+
+        .btn-back:hover {
+            background-color: #f8f9fa;
+        }
+</style>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-7">
+            <div class="form-card">
+                <div class="form-header text-center">
+                    <h2 class="text-primary fw-bold">📝 Nuevo Expediente</h2>
+                    <p class="text-muted">Complete la información para registrar el rendimiento académico</p>
+                </div>
+
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="row">
+                        <!-- Alumno -->
+                        <div class="col-md-12 mb-4">
+                            <label class="form-label fw-bold"><i class="bi bi-person-fill me-2"></i>Alumno</label>
+                            <select asp-for="AlumnoId" class="form-control shadow-sm" asp-items="ViewBag.AlumnoId"></select>
+                            <span asp-validation-for="AlumnoId" class="text-danger small"></span>
+                        </div>
+
+                        <!-- Materia -->
+                        <div class="col-md-12 mb-4">
+                            <label class="form-label fw-bold"><i class="bi bi-book-half me-2"></i>Materia</label>
+                            <select asp-for="MateriaId" class="form-control shadow-sm" asp-items="ViewBag.MateriaId"></select>
+                            <span asp-validation-for="MateriaId" class="text-danger small"></span>
+                        </div>
+
+                        <!-- Nota Final -->
+                        <div class="col-md-6 mb-4">
+                            <label class="form-label fw-bold"><i class="bi bi-star-fill me-2"></i>Nota Final</label>
+                            <input asp-for="NotaFinal" class="form-control shadow-sm" placeholder="Ej: 9.5" />
+                            <span asp-validation-for="NotaFinal" class="text-danger small"></span>
+                        </div>
+
+                        <!-- Observaciones -->
+                        <div class="col-md-6 mb-4">
+                            <label class="form-label fw-bold"><i class="bi bi-chat-left-text-fill me-2"></i>Observaciones</label>
+                            <input asp-for="Observaciones" class="form-control shadow-sm" placeholder="Comentarios..." />
+                            <span asp-validation-for="Observaciones" class="text-danger small"></span>
+                        </div>
+                    </div>
+
+                    <!-- Botones de Acción -->
+                    <div class="d-flex justify-content-between align-items-center mt-4">
+                        <a asp-action="Index" class="btn btn-back btn-custom">
+                            Regresar
+                        </a>
+                        <button type="submit" class="btn btn-save btn-custom shadow">
+                            Guardar Registro
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

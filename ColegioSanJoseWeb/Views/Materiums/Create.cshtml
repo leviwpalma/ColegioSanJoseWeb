@@ -1,0 +1,118 @@
+﻿@model ColegioSanJoseWeb.Models.Materium
+
+@{
+    ViewData["Title"] = "Nueva Materia";
+}
+
+<style>
+    /* Tarjeta del formulario con elevación */
+    .form-card {
+        background: white;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        border: none;
+        margin-top: 30px;
+    }
+
+    .form-header {
+        border-bottom: 2px solid #f0f0f0;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+    }
+
+    /* Estilo para los campos de texto */
+    .form-control {
+        border-radius: 10px;
+        padding: 12px;
+        border: 1px solid #dee2e6;
+        transition: all 0.3s;
+    }
+
+        .form-control:focus {
+            border-color: #28a745; /* Verde para creación */
+            box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.15);
+        }
+
+    /* Botones modernos */
+    .btn-custom {
+        border-radius: 50px;
+        padding: 12px 30px;
+        font-weight: 600;
+        transition: all 0.3s;
+    }
+
+    .btn-create {
+        background: linear-gradient(90deg, #28a745, #218838);
+        border: none;
+        color: white;
+    }
+
+        .btn-create:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+            color: white;
+        }
+
+    .btn-back {
+        color: #6c757d;
+        border: 1px solid #dee2e6;
+    }
+
+        .btn-back:hover {
+            background-color: #f8f9fa;
+        }
+</style>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="form-card">
+                <div class="form-header text-center">
+                    <h2 class="text-success fw-bold">📚 Nueva Materia</h2>
+                    <p class="text-muted">Ingrese los datos para registrar una nueva asignatura</p>
+                </div>
+
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger small"></div>
+
+                    <!-- Campo: Nombre de la Materia -->
+                    <div class="form-group mb-4">
+                        <label asp-for="NombreMateria" class="form-label fw-bold">Nombre de la Asignatura</label>
+                        <div class="input-group shadow-sm" style="border-radius: 10px; overflow: hidden;">
+                            <span class="input-group-text bg-light border-end-0">📘</span>
+                            <input asp-for="NombreMateria" class="form-control border-start-0" placeholder="Ej: Programación II" />
+                        </div>
+                        <span asp-validation-for="NombreMateria" class="text-danger small"></span>
+                    </div>
+
+                    <!-- Campo: Docente -->
+                    <div class="form-group mb-4">
+                        <label asp-for="Docente" class="form-label fw-bold">Docente Encargado</label>
+                        <div class="input-group shadow-sm" style="border-radius: 10px; overflow: hidden;">
+                            <span class="input-group-text bg-light border-end-0">👩‍🏫</span>
+                            <input asp-for="Docente" class="form-control border-start-0" placeholder="Nombre completo del docente" />
+                        </div>
+                        <span asp-validation-for="Docente" class="text-danger small"></span>
+                    </div>
+
+                    <!-- Botones de Acción -->
+                    <div class="d-flex justify-content-between align-items-center mt-5">
+                        <a asp-action="Index" class="btn btn-back btn-custom">
+                            Volver al listado
+                        </a>
+                        <button type="submit" class="btn btn-create btn-custom shadow">
+                            Registrar Materia
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

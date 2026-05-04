@@ -1,0 +1,102 @@
+﻿@{
+    ViewData["Title"] = "Panel de Control";
+}
+
+<style>
+    /* Estilo para el contenedor principal */
+    .hero-section {
+        background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+        color: white;
+        padding: 60px 0;
+        border-radius: 0 0 50px 50px;
+        margin-bottom: 40px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    /* Estilo de las tarjetas (Cards) */
+    .admin-card {
+        border: none;
+        border-radius: 20px;
+        transition: all 0.3s ease;
+        overflow: hidden;
+        background: white;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+
+        .admin-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+
+    .card-icon {
+        font-size: 3rem;
+        margin-bottom: 15px;
+        display: block;
+    }
+
+    .btn-action {
+        border-radius: 50px;
+        padding: 10px 25px;
+        font-weight: 600;
+    }
+</style>
+
+<!-- Sección de Bienvenida -->
+<div class="hero-section text-center">
+    <div class="container">
+        <h1 class="display-4 fw-bold">Sistema Académico Colegio San José</h1>
+        <p class="lead">Bienvenido al portal de gestión docente. Seleccione un módulo para comenzar.</p>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row g-4 justify-content-center">
+
+        <!-- Módulo Alumnos -->
+        <div class="col-md-4">
+            <div class="card admin-card h-100 text-center p-4">
+                <div class="card-body">
+                    <span class="card-icon">👨‍🎓</span>
+                    <h3 class="card-title fw-bold">Alumnos</h3>
+                    <p class="text-muted">Gestión de datos personales, inscripción y perfiles de estudiantes.</p>
+                    <a asp-controller="Alumnoes" asp-action="Index" class="btn btn-primary btn-action mt-3">Gestionar</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Módulo Materias -->
+        <div class="col-md-4">
+            <div class="card admin-card h-100 text-center p-4">
+                <div class="card-body">
+                    <span class="card-icon">📚</span>
+                    <h3 class="card-title fw-bold">Materias</h3>
+                    <p class="text-muted">Administración del catálogo de asignaturas y créditos académicos.</p>
+                    <a asp-controller="Materiums" asp-action="Index" class="btn btn-primary btn-action mt-3">Gestionar</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Módulo Expedientes -->
+        <div class="col-md-4">
+            <div class="card admin-card h-100 text-center p-4">
+                <div class="card-body">
+                    <span class="card-icon">📊</span>
+                    <h3 class="card-title fw-bold">Expedientes</h3>
+                    <p class="text-muted">Registro de notas, observaciones y rendimiento académico global.</p>
+                    <a asp-controller="Expedientes" asp-action="Index" class="btn btn-primary btn-action mt-3">Gestionar</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Sección Inferior de Información -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="alert alert-info border-0 shadow-sm rounded-4 p-4 text-center">
+                <h5 class="fw-bold">📅 Período Lectivo 2026</h5>
+                <p class="mb-0">Recuerde que el cierre de actas para el primer trimestre es el próximo 15 de mayo.</p>
+            </div>
+        </div>
+    </div>
+</div>

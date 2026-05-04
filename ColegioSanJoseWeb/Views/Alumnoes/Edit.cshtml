@@ -1,0 +1,144 @@
+﻿@model ColegioSanJoseWeb.Models.Alumno
+
+@{
+    ViewData["Title"] = "Editar Alumno";
+}
+
+<style>
+    /* Tarjeta de edición */
+    .edit-card {
+        background: white;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        border: none;
+        margin-top: 30px;
+    }
+
+    .edit-header {
+        border-bottom: 2px solid #f0f0f0;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+    }
+
+    /* Campos de entrada */
+    .form-control {
+        border-radius: 10px;
+        padding: 12px;
+        border: 1px solid #dee2e6;
+        transition: all 0.3s;
+    }
+
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.15);
+        }
+
+    /* Botones */
+    .btn-custom {
+        border-radius: 50px;
+        padding: 12px 30px;
+        font-weight: 600;
+        transition: all 0.3s;
+    }
+
+    .btn-save {
+        background: #007bff;
+        border: none;
+        color: white;
+    }
+
+        .btn-save:hover {
+            background: #0056b3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
+            color: white;
+        }
+
+    .btn-cancel {
+        color: #6c757d;
+        border: 1px solid #dee2e6;
+    }
+
+        .btn-cancel:hover {
+            background-color: #f8f9fa;
+        }
+</style>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="edit-card">
+                <div class="edit-header text-center">
+                    <h2 class="text-primary fw-bold">📝 Editar Información</h2>
+                    <p class="text-muted">Actualice los datos del alumno: <strong>@Model.Nombre @Model.Apellido</strong></p>
+                </div>
+
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger small"></div>
+
+                    @* El ID oculto es indispensable para la actualización en la base de datos *@
+                    <input type="hidden" asp-for="AlumnoId" />
+
+                    <div class="row">
+                        <!-- Nombre -->
+                        <div class="col-md-6 mb-4">
+                            <label asp-for="Nombre" class="form-label fw-bold">Nombre</label>
+                            <div class="input-group shadow-sm" style="border-radius: 10px; overflow: hidden;">
+                                <span class="input-group-text bg-light border-end-0">👤</span>
+                                <input asp-for="Nombre" class="form-control border-start-0" />
+                            </div>
+                            <span asp-validation-for="Nombre" class="text-danger small"></span>
+                        </div>
+
+                        <!-- Apellido -->
+                        <div class="col-md-6 mb-4">
+                            <label asp-for="Apellido" class="form-label fw-bold">Apellido</label>
+                            <div class="input-group shadow-sm" style="border-radius: 10px; overflow: hidden;">
+                                <span class="input-group-text bg-light border-end-0">👤</span>
+                                <input asp-for="Apellido" class="form-control border-start-0" />
+                            </div>
+                            <span asp-validation-for="Apellido" class="text-danger small"></span>
+                        </div>
+
+                        <!-- Fecha de Nacimiento -->
+                        <div class="col-md-6 mb-4">
+                            <label asp-for="FechaNacimiento" class="form-label fw-bold">Fecha de Nacimiento</label>
+                            <div class="input-group shadow-sm" style="border-radius: 10px; overflow: hidden;">
+                                <span class="input-group-text bg-light border-end-0">📅</span>
+                                <input asp-for="FechaNacimiento" type="date" class="form-control border-start-0" />
+                            </div>
+                            <span asp-validation-for="FechaNacimiento" class="text-danger small"></span>
+                        </div>
+
+                        <!-- Grado -->
+                        <div class="col-md-6 mb-4">
+                            <label asp-for="Grado" class="form-label fw-bold">Grado Académico</label>
+                            <div class="input-group shadow-sm" style="border-radius: 10px; overflow: hidden;">
+                                <span class="input-group-text bg-light border-end-0">🎓</span>
+                                <input asp-for="Grado" class="form-control border-start-0" />
+                            </div>
+                            <span asp-validation-for="Grado" class="text-danger small"></span>
+                        </div>
+                    </div>
+
+                    <!-- Botones de Acción -->
+                    <div class="d-flex justify-content-between align-items-center mt-4 pt-3 border-top">
+                        <a asp-action="Index" class="btn btn-cancel btn-custom">
+                            Descartar cambios
+                        </a>
+                        <button type="submit" class="btn btn-save btn-custom shadow">
+                            Guardar Cambios
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

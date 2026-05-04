@@ -1,0 +1,97 @@
+﻿@model ColegioSanJoseWeb.Models.Materium
+
+@{
+    ViewData["Title"] = "Eliminar Materia";
+}
+
+<style>
+    /* Tarjeta de advertencia */
+    .delete-card {
+        background: white;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        border: 2px solid #ff4d4d; /* Borde rojo sutil */
+        margin-top: 30px;
+    }
+
+    /* Icono de peligro */
+    .warning-icon {
+        font-size: 4rem;
+        color: #dc3545;
+        margin-bottom: 20px;
+        display: block;
+    }
+
+    /* Estilo para los datos de la materia a borrar */
+    .info-box {
+        background-color: #fff5f5;
+        border-radius: 10px;
+        padding: 20px;
+        margin: 25px 0;
+        border-left: 5px solid #dc3545;
+    }
+
+    /* Botones */
+    .btn-custom {
+        border-radius: 50px;
+        padding: 12px 30px;
+        font-weight: 600;
+        transition: all 0.3s;
+    }
+
+    .btn-confirm-delete {
+        background: #dc3545;
+        color: white;
+        border: none;
+    }
+
+        .btn-confirm-delete:hover {
+            background: #a71d2a;
+            color: white;
+            transform: scale(1.05);
+        }
+
+    .btn-cancel {
+        color: #6c757d;
+        border: 1px solid #dee2e6;
+    }
+
+        .btn-cancel:hover {
+            background-color: #f8f9fa;
+        }
+</style>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="delete-card text-center">
+                <span class="warning-icon">⚠️</span>
+                <h2 class="text-danger fw-bold">¿Eliminar esta materia?</h2>
+                <p class="text-muted">Esta acción es permanente y no se puede deshacer.</p>
+
+                <div class="info-box text-start">
+                    <p class="mb-1 text-uppercase small fw-bold text-muted">Asignatura:</p>
+                    <h4 class="mb-3 text-dark">@Html.DisplayFor(model => model.NombreMateria)</h4>
+
+                    <p class="mb-1 text-uppercase small fw-bold text-muted">Docente:</p>
+                    <h5 class="text-dark">@Html.DisplayFor(model => model.Docente)</h5>
+                </div>
+
+                <form asp-action="Delete">
+                    @* Es vital mantener el ID oculto *@
+                    <input type="hidden" asp-for="MateriaId" />
+
+                    <div class="d-flex justify-content-between align-items-center mt-4">
+                        <a asp-action="Index" class="btn btn-cancel btn-custom">
+                            No, cancelar
+                        </a>
+                        <button type="submit" class="btn btn-confirm-delete btn-custom shadow">
+                            Sí, eliminar materia
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

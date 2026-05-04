@@ -1,0 +1,134 @@
+﻿@model ColegioSanJoseWeb.Models.Alumno
+
+@{
+    ViewData["Title"] = "Perfil del Alumno";
+}
+
+<style>
+    /* Tarjeta principal de perfil */
+    .profile-card {
+        background: white;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        border: none;
+        margin-top: 30px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Encabezado con degradado suave */
+    .profile-header {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        margin: -40px -40px 30px -40px;
+        padding: 40px;
+        text-align: center;
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    .avatar-circle {
+        width: 100px;
+        height: 100px;
+        background: #007bff;
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin: 0 auto 15px;
+        box-shadow: 0 4px 10px rgba(0,123,255,0.3);
+    }
+
+    /* Estilo de etiquetas y datos */
+    .info-label {
+        color: #6c757d;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        font-weight: 700;
+        letter-spacing: 1px;
+        margin-bottom: 5px;
+    }
+
+    .info-value {
+        font-size: 1.1rem;
+        color: #212529;
+        margin-bottom: 25px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    /* Botones */
+    .btn-custom {
+        border-radius: 50px;
+        padding: 12px 30px;
+        font-weight: 600;
+        transition: all 0.3s;
+    }
+
+    .btn-edit-profile {
+        background: #007bff;
+        color: white;
+        border: none;
+    }
+
+        .btn-edit-profile:hover {
+            background: #0056b3;
+            color: white;
+            transform: translateY(-2px);
+        }
+</style>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="profile-card">
+                <div class="profile-header">
+                    <div class="avatar-circle">
+                        @Model.Nombre.Substring(0, 1)@Model.Apellido.Substring(0, 1)
+                    </div>
+                    <h2 class="fw-bold mb-0">@Model.Nombre @Model.Apellido</h2>
+                    <span class="badge bg-primary px-3 py-2 mt-2">Estudiante Activo</span>
+                </div>
+
+                <div class="row px-4">
+                    <div class="col-md-6">
+                        <div class="info-group">
+                            <p class="info-label">Nombres</p>
+                            <p class="info-value">@Html.DisplayFor(model => model.Nombre)</p>
+                        </div>
+                        <div class="info-group">
+                            <p class="info-label">Apellidos</p>
+                            <p class="info-value">@Html.DisplayFor(model => model.Apellido)</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="info-group">
+                            <p class="info-label">Fecha de Nacimiento</p>
+                            <p class="info-value">
+                                📅 @Model.FechaNacimiento.ToString("dd / MM / yyyy")
+                            </p>
+                        </div>
+                        <div class="info-group">
+                            <p class="info-label">Grado Académico</p>
+                            <p class="info-value text-primary fw-bold">
+                                🎓 @Html.DisplayFor(model => model.Grado)
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mt-4 pt-3 border-top px-4">
+                    <a asp-action="Index" class="btn btn-outline-secondary btn-custom">
+                        Volver al Listado
+                    </a>
+                    <a asp-action="Edit" asp-route-id="@Model?.AlumnoId" class="btn btn-edit-profile btn-custom shadow">
+                        Editar Perfil
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

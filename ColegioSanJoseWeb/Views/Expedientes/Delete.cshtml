@@ -1,0 +1,113 @@
+﻿@model ColegioSanJoseWeb.Models.Expediente
+
+@{
+    ViewData["Title"] = "Eliminar Expediente";
+}
+
+<style>
+    /* Tarjeta de confirmación de eliminación */
+    .delete-card {
+        background: white;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        border: 2px solid #dc3545; /* Borde rojo de advertencia */
+        margin-top: 30px;
+    }
+
+    .warning-icon {
+        font-size: 4rem;
+        color: #dc3545;
+        margin-bottom: 15px;
+        display: block;
+    }
+
+    /* Caja con los datos del registro a borrar */
+    .info-summary {
+        background-color: #fff5f5;
+        border-radius: 15px;
+        padding: 25px;
+        margin: 25px 0;
+        border-left: 5px solid #dc3545;
+    }
+
+    .info-label {
+        color: #6c757d;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        font-weight: 700;
+        margin-bottom: 2px;
+    }
+
+    /* Botones */
+    .btn-custom {
+        border-radius: 50px;
+        padding: 12px 30px;
+        font-weight: 600;
+        transition: all 0.3s;
+    }
+
+    .btn-delete-final {
+        background: #dc3545;
+        border: none;
+        color: white;
+    }
+
+        .btn-delete-final:hover {
+            background: #a71d2a;
+            transform: scale(1.05);
+            color: white;
+        }
+
+    .btn-cancel {
+        color: #6c757d;
+        border: 1px solid #dee2e6;
+    }
+
+        .btn-cancel:hover {
+            background-color: #f8f9fa;
+        }
+</style>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="delete-card text-center">
+                <span class="warning-icon">⚠️</span>
+                <h2 class="text-danger fw-bold">¿Eliminar registro?</h2>
+                <p class="text-muted">Está a punto de borrar permanentemente esta calificación. Esta acción no se puede deshacer.</p>
+
+                <div class="info-summary text-start">
+                    <div class="row">
+                        <div class="col-12 mb-3">
+                            <p class="info-label">Alumno</p>
+                            <h5 class="fw-bold mb-0">@Model.Alumno.Nombre @Model.Alumno.Apellido</h5>
+                        </div>
+                        <div class="col-6">
+                            <p class="info-label">Materia</p>
+                            <p class="mb-0">@Model.Materia.NombreMateria</p>
+                        </div>
+                        <div class="col-6">
+                            <p class="info-label">Nota Final</p>
+                            <p class="fw-bold text-danger mb-0">@Model.NotaFinal</p>
+                        </div>
+                    </div>
+                </div>
+
+                <form asp-action="Delete">
+                    @* Crucial: El ID oculto para que el servidor sepa qué borrar *@
+                    <input type="hidden" asp-for="ExpedienteId" />
+
+                    <div class="d-flex justify-content-between align-items-center mt-4">
+                        <a asp-action="Index" class="btn btn-cancel btn-custom">
+                            No, mantenerlo
+                        </a>
+                        <button type="submit" class="btn btn-delete-final btn-custom shadow">
+                            Sí, eliminar permanentemente
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

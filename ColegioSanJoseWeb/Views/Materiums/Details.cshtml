@@ -1,0 +1,109 @@
+﻿@model ColegioSanJoseWeb.Models.Materium
+
+@{
+    ViewData["Title"] = "Detalles de la Materia";
+}
+
+<style>
+    /* Tarjeta de visualización */
+    .details-card {
+        background: white;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        border: none;
+        margin-top: 30px;
+    }
+
+    .details-header {
+        border-bottom: 2px solid #f0f0f0;
+        margin-bottom: 30px;
+        padding-bottom: 15px;
+    }
+
+    /* Estilo para las etiquetas (dt) y valores (dd) */
+    .label-custom {
+        color: #6c757d;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        letter-spacing: 1px;
+    }
+
+    .value-custom {
+        font-size: 1.2rem;
+        color: #343a40;
+        margin-bottom: 20px;
+    }
+
+    /* Botones */
+    .btn-custom {
+        border-radius: 50px;
+        padding: 12px 30px;
+        font-weight: 600;
+        transition: all 0.3s;
+    }
+
+    .btn-edit-details {
+        background: #007bff;
+        color: white;
+        border: none;
+    }
+
+        .btn-edit-details:hover {
+            background: #0056b3;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+    .btn-back-details {
+        color: #6c757d;
+        border: 1px solid #dee2e6;
+    }
+
+        .btn-back-details:hover {
+            background-color: #f8f9fa;
+        }
+</style>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-7">
+            <div class="details-card">
+                <div class="details-header text-center">
+                    <span class="display-4 mb-3 d-block">📖</span>
+                    <h2 class="text-primary fw-bold">Información de la Materia</h2>
+                    <p class="text-muted">Consulta los datos registrados en el sistema</p>
+                </div>
+
+                <div class="row px-4">
+                    <!-- Nombre de la Materia -->
+                    <div class="col-12">
+                        <p class="label-custom mb-1">Nombre de la Asignatura</p>
+                        <p class="value-custom fw-bold">
+                            @Html.DisplayFor(model => model.NombreMateria)
+                        </p>
+                    </div>
+
+                    <!-- Docente -->
+                    <div class="col-12">
+                        <p class="label-custom mb-1">Docente Encargado</p>
+                        <p class="value-custom">
+                            <span class="text-muted">👨‍🏫</span> @Html.DisplayFor(model => model.Docente)
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Botones de Navegación -->
+                <div class="d-flex justify-content-between align-items-center mt-5 pt-3 border-top">
+                    <a asp-action="Index" class="btn btn-back-details btn-custom">
+                        Volver al Listado
+                    </a>
+                    <a asp-action="Edit" asp-route-id="@Model?.MateriaId" class="btn btn-edit-details btn-custom shadow">
+                        Editar Información
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,134 @@
+﻿@model IEnumerable<ColegioSanJoseWeb.Models.Expediente>
+
+@{
+    ViewData["Title"] = "Gráficas y Estadísticas";
+}
+
+<style>
+    /* Estilo para las tarjetas de resumen */
+    .card-stats {
+        border: none;
+        border-radius: 15px;
+        transition: transform 0.3s;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        color: white;
+    }
+
+        .card-stats:hover {
+            transform: translateY(-5px);
+        }
+
+    /* Estilo de la tabla */
+    .table-modern {
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        margin-top: 20px;
+    }
+
+        .table-modern thead {
+            background-color: #007bff;
+            color: white;
+        }
+
+    /* La Gráfica de Barras dentro de la tabla */
+    .grafica-barra {
+        height: 12px;
+        background-color: #eee;
+        border-radius: 10px;
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        margin-top: 5px;
+    }
+
+    .progreso-llenado {
+        height: 100%;
+        background: linear-gradient(90deg, #28a745, #85e085);
+        border-radius: 10px;
+    }
+</style>
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="text-primary fw-bold">📊 Gráficas y Estadísticas</h1>
+        <a asp-action="Create" class="btn btn-success rounded-pill px-4 shadow-sm">Crear Nuevo Expediente</a>
+    </div>
+
+    <!-- SECCIÓN DE TARJETAS (ESTADÍSTICAS RÁPIDAS) -->
+    <<!-- SECCIÓN DE TARJETAS (ESTADÍSTICAS RÁPIDAS) -->
+    <div class="row mb-5">
+        <div class="col-md-4">
+            <div class="card card-stats bg-primary p-4 text-center">
+                <h5 class="text-uppercase small">Total de Alumnos</h5>
+                <h2 class="fw-bold">@Model.Select(x => x.AlumnoId).Distinct().Count()</h2>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card card-stats bg-info p-4 text-center">
+                <h5 class="text-uppercase small">Materias Registradas</h5>
+                <h2 class="fw-bold">@Model.Select(x => x.MateriaId).Distinct().Count()</h2>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card card-stats bg-warning p-4 text-center text-dark">
+                <h5 class="text-uppercase small">Promedio Institucional</h5>
+                @* Se agregaron paréntesis extra para que el ToString no falle *@
+                <h2 class="fw-bold">@(Model.Any() ? Model.Average(x => (double)x.NotaFinal).ToString("F2") : "0.00")</h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- TABLA CON GRÁFICAS DE RENDIMIENTO -->
+    <div class="table-responsive">
+        <table class="table table-modern table-hover align-middle">
+            <thead>
+                <tr>
+                    <th>Alumno</th>
+                    <th>Materia</th>
+                    <th style="width: 25%;">Rendimiento Académico</th>
+                    <th>Observaciones</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="fw-bold">
+                            @item.Alumno?.Nombre
+                        </td>
+                        <td>
+                            <span class="badge bg-light text-dark border">
+                                @item.Materia?.NombreMateria
+                            </span>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center justify-content-between mb-1">
+                                <small class="fw-bold text-muted">Nota: @item.NotaFinal</small>
+                            </div>
+                            <div class="grafica-barra">
+                                @{
+                                    // Cálculo de porcentaje para la barra (Máximo 10)
+                                    var porcentaje = (item.NotaFinal * 10);
+                                }
+                                <div class="progreso-llenado" style="width: @porcentaje%"></div>
+                            </div>
+                        </td>
+                        <td class="text-muted small">
+                            @item.Observaciones
+                        </td>
+                        <td>
+                            <div class="btn-group">
+                                <a asp-action="Edit" asp-route-id="@item.ExpedienteId" class="btn btn-sm btn-outline-primary">Editar</a>
+                                <a asp-action="Details" asp-route-id="@item.ExpedienteId" class="btn btn-sm btn-outline-secondary">Ver</a>
+                                <a asp-action="Delete" asp-route-id="@item.ExpedienteId" class="btn btn-sm btn-outline-danger">Borrar</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
